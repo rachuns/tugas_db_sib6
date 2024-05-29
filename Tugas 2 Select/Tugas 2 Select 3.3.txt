@@ -1,0 +1,129 @@
+Microsoft Windows [Version 10.0.19045.4291]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Rachmat Ashari>cd ../..
+
+C:\>cd xampp/mysql/bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 13
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use sib6
+Database changed
+MariaDB [sib6]> show tables;
++-------------------------+
+| Tables_in_sib6          |
++-------------------------+
+| failed_jobs             |
+| jenis_produk            |
+| kartu                   |
+| lihat_vendor            |
+| member                  |
+| migrations              |
+| password_reset_tokens   |
+| password_resets         |
+| pelanggan               |
+| pembayaran              |
+| pembelian               |
+| personal_access_tokens  |
+| pesanan                 |
+| pesanan_items           |
+| pesanan_pelanggan_kartu |
+| produk                  |
+| staff                   |
+| users                   |
+| vendor                  |
++-------------------------+
+19 rows in set (0.001 sec)
+
+MariaDB [sib6]> SELECT id,nama,stok, CASE WHEN stok <= min_stok THEN 'Segera Belanja' ELSE 'Stok Aman' END AS keterangan FROM produk;
++----+-------------------+------+----------------+
+| id | nama              | stok | keterangan     |
++----+-------------------+------+----------------+
+|  1 | Televisi 21 inchs |    5 | Stok Aman      |
+|  2 | Televisi 40 inch  |    4 | Stok Aman      |
+|  3 | Kulkas 2 pintu    |    6 | Stok Aman      |
+|  4 | Meja Makan        |    4 | Stok Aman      |
+|  5 | Teh Kotak         |    6 | Segera Belanja |
+|  6 | PC Desktop HP     |    9 | Stok Aman      |
+|  7 | Teh Botol         |   53 | Stok Aman      |
+|  8 | Notebook Acer S   |    7 | Stok Aman      |
+|  9 | Notebook Lenovo   |    9 | Stok Aman      |
+| 11 | Laptop Lenovo     |    5 | Stok Aman      |
+| 15 | Kopi              |   10 | Segera Belanja |
+| 16 | Teh Sosro 2       |   10 | Segera Belanja |
+| 18 | Laptop Asus       |   10 | Segera Belanja |
+| 19 | Televisi 22 inc`  |    5 | Stok Aman      |
+| 20 | Televisi 23 inc   |    5 | Stok Aman      |
+| 21 | Televisi 24 inc   |    5 | Stok Aman      |
+| 22 | Televisi 25 inc   |    5 | Stok Aman      |
+| 24 | Televisi 27 inc   |    5 | Stok Aman      |
+| 25 | Televisi 28 inc   |    5 | Stok Aman      |
+| 26 | Televisi 29 inc   |    5 | Stok Aman      |
+| 27 | Teh Pucuk         |   10 | Stok Aman      |
+| 28 | Teh Pucuk2        |   10 | Stok Aman      |
++----+-------------------+------+----------------+
+22 rows in set (0.001 sec)
+
+MariaDB [sib6]> SELECT id, nama, YEAR(NOW()) - YEAR(tgl_lahir) AS umur, CASE WHEN YEAR(NOW()) - YEAR(tgl_lahir) < 17 THEN 'muda' WHEN YEAR(NOW()) - YEAR(tgl_lahir) BETWEEN 17 AND 55 THEN 'dewasa' ELSE 'tua' END AS kategori_umur FROM pelanggan;
++----+--------------------+------+---------------+
+| id | nama               | umur | kategori_umur |
++----+--------------------+------+---------------+
+|  1 | Agung Sedayu Group |   14 | muda          |
+|  2 | Pandan Wangi       |   74 | tua           |
+|  3 | Sekar Mirah        |   41 | dewasa        |
+|  4 | Swandaru Geni      |   43 | dewasa        |
+|  5 | Pradabashu         |   39 | dewasa        |
+|  6 | Gayatri Dwi        |   37 | dewasa        |
+|  7 | Dewi Gyat          |   36 | dewasa        |
+|  8 | Andre Haru         |   34 | dewasa        |
+|  9 | Ahmad Hasan        |   32 | dewasa        |
+| 10 | Cassanndra         |   34 | dewasa        |
+| 11 | Andi Wijaya        |    1 | muda          |
+| 12 | Ira                |    1 | muda          |
++----+--------------------+------+---------------+
+12 rows in set (0.001 sec)
+
+MariaDB [sib6]> SELECT id, kode, nama,
+    -> CASE
+    -> WHEN kode= 'TV01' THEN 'DVD Player'
+    -> WHEN kode= 'K001' THEN 'Rice Cooker'
+    -> ELSE 'tidak ada'
+    -> END AS bonus
+    -> FROM produk;
++----+--------+-------------------+-------------+
+| id | kode   | nama              | bonus       |
++----+--------+-------------------+-------------+
+|  1 | TV01   | Televisi 21 inchs | DVD Player  |
+|  2 | TV02   | Televisi 40 inch  | tidak ada   |
+|  3 | K001   | Kulkas 2 pintu    | Rice Cooker |
+|  4 | M001   | Meja Makan        | tidak ada   |
+|  5 | TK01   | Teh Kotak         | tidak ada   |
+|  6 | PC01   | PC Desktop HP     | tidak ada   |
+|  7 | TB01   | Teh Botol         | tidak ada   |
+|  8 | AC01   | Notebook Acer S   | tidak ada   |
+|  9 | LN01   | Notebook Lenovo   | tidak ada   |
+| 11 | L005   | Laptop Lenovo     | tidak ada   |
+| 15 | L112   | Kopi              | tidak ada   |
+| 16 | L113   | Teh Sosro 2       | tidak ada   |
+| 18 | L0015  | Laptop Asus       | tidak ada   |
+| 19 | TV0115 | Televisi 22 inc`  | tidak ada   |
+| 20 | TV0116 | Televisi 23 inc   | tidak ada   |
+| 21 | TV0117 | Televisi 24 inc   | tidak ada   |
+| 22 | TV0118 | Televisi 25 inc   | tidak ada   |
+| 24 | TV0120 | Televisi 27 inc   | tidak ada   |
+| 25 | TV0121 | Televisi 28 inc   | tidak ada   |
+| 26 | TV0122 | Televisi 29 inc   | tidak ada   |
+| 27 | THP001 | Teh Pucuk         | tidak ada   |
+| 28 | THP002 | Teh Pucuk2        | tidak ada   |
++----+--------+-------------------+-------------+
+22 rows in set (0.000 sec)
+
+MariaDB [sib6]>

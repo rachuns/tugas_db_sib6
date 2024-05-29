@@ -1,0 +1,84 @@
+Microsoft Windows [Version 10.0.19045.4291]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Rachmat Ashari>cd ../..
+
+C:\>cd xampp/mysql/bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 10
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use sib6
+Database changed
+MariaDB [sib6]> select count(*) as jumlah_pelanggan from pelanggan where year(tgl_lahir) = 1998;
++------------------+
+| jumlah_pelanggan |
++------------------+
+|                0 |
++------------------+
+1 row in set (0.026 sec)
+
+MariaDB [sib6]> select jk, count(*) as jumlah_pelanggan from pelanggan where jk = 'P' and tmp_lahir = 'jakarta';
++------+------------------+
+| jk   | jumlah_pelanggan |
++------+------------------+
+| P    |                3 |
++------+------------------+
+1 row in set (0.044 sec)
+
+MariaDB [sib6]> select sum(stok) as jumlah_produk from produk where harga_jual < 10000;
++---------------+
+| jumlah_produk |
++---------------+
+|            79 |
++---------------+
+1 row in set (0.000 sec)
+
+MariaDB [sib6]> select count(*) as jumlah_produk_k from produk where kode like 'K%';
++-----------------+
+| jumlah_produk_k |
++-----------------+
+|               1 |
++-----------------+
+1 row in set (0.027 sec)
+
+MariaDB [sib6]> select AVG(harga_jual) as jual_rata from produk where harga_jual > 1000000;
++--------------------+
+| jual_rata          |
++--------------------+
+| 31387733.333333332 |
++--------------------+
+1 row in set (0.001 sec)
+
+MariaDB [sib6]> select max(stok) as jumlah_stok_terbesar from produk;
++----------------------+
+| jumlah_stok_terbesar |
++----------------------+
+|                   53 |
++----------------------+
+1 row in set (0.000 sec)
+
+MariaDB [sib6]> select count(*) as jumlah_produk_kurang_dari_stok from produk where stok < min_stok;
++--------------------------------+
+| jumlah_produk_kurang_dari_stok |
++--------------------------------+
+|                              4 |
++--------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [sib6]> select sum(harga_beli * stok) as total_asset from produk;
++-------------+
+| total_asset |
++-------------+
+|   480504000 |
++-------------+
+1 row in set (0.001 sec)
+
+MariaDB [sib6]>
